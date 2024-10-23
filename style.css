@@ -6,33 +6,14 @@
     text-decoration: none;
 }
 
-
-/* body{
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-canvas{
-    border: 10px solid red;
-    display: flex;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    max-width: 100vw;
-    max-height: 100vh;
-    flex: 1;
-    
-   
-} */
 body{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
+   
 }
 canvas{
-    border: 2px solid red;
+    border: 1.5rem solid red;
     position: absolute;
     top: 3px;
     left: 0px; 
@@ -40,3 +21,4 @@ canvas{
     height: 99vh;
     
 }
+ 
