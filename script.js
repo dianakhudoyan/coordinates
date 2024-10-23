@@ -18,7 +18,7 @@
 
   var centerX = 150; 
   var centerY = 100; 
-  var radius =40;  
+  var radius =10;  
 
   ctx.beginPath(); 
   ctx.arc(centerX, centerY, radius, 0, Math.PI * 2); 
