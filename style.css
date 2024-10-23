@@ -1,23 +1,38 @@
-*{
-    margin: 0px; padding: 0px;
-    border: none; outline: none;
+* {
+    margin: 0px; 
+    padding: 0px;
+    border: none; 
+    outline: none;
     box-sizing: border-box;
     text-transform: capitalize;
     text-decoration: none;
 }
 
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-   
 }
-canvas{
+
+canvas {
     border: .5rem solid black;
     position: absolute;
     width: 99%;
     top: 3px;
     left: 0px; 
     height: 99vh;
-    
+}
+
+.content {
+    position: absolute;
+    top: 20px; 
+    left: 3%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.box {
+    display: flex;
+    gap: 10px;
 }
