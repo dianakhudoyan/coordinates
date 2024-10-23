@@ -15,10 +15,9 @@ body{
 canvas{
     border: 1.5rem solid red;
     position: absolute;
+    width: 99%;
     top: 3px;
     left: 0px; 
-    width: 99%;
     height: 99vh;
     
 }
- 
