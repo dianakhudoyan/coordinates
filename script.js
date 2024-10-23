@@ -6,12 +6,12 @@
   ctx.lineWidth = 2;
 
   ctx.beginPath();
-  ctx.moveTo(0, 250);  
-  ctx.lineTo(500, 250);  
+  ctx.moveTo(0, 500);  
+  ctx.lineTo(1000, 500);  
   ctx.stroke();
 
   
   ctx.beginPath();
-  ctx.moveTo(250, 0);  
-  ctx.lineTo(250, 500);  
+  ctx.moveTo(500, 0);  
+  ctx.lineTo(500, 1000);  
   ctx.stroke();
