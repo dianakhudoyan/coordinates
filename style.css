@@ -13,7 +13,7 @@ body{
    
 }
 canvas{
-    border: 1.5rem solid red;
+    border: .5rem solid black;
     position: absolute;
     width: 99%;
     top: 3px;
