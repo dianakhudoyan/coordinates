@@ -27,12 +27,17 @@
     radius :10, 
    }
    let x=10
+   let y=10
    function upDate(){
    
     if(data.centerX+data.radius > canvas.width || data.centerX<0){
       x*=-1
     }
+    if(data.centerY+data.radius > canvas.height || data.centerY- data.radius<0){
+      y*=-1
+    }
     data.centerX+=x
+    data.centerY+=y
    }
    
   function draw(){
