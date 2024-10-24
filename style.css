@@ -25,8 +25,8 @@ canvas {
 
 .content {
     position: absolute;
-    top: 10vh; 
-    left: 10vh;
+    top: 10vw; 
+    left: 10vw;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
