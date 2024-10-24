@@ -9,20 +9,21 @@
 }
 
 body {
-    display: flex;
+     display: flex;
     justify-content: center;
     align-items: center;
     
 }
 
 canvas {
+    position: absolute;
     border: .5rem solid black;
-    justify-content: center;
     width: 50%;
-    top: 3px;
+    top: 2vh;
     left: 25%; 
     right: 25%;
-    height: 99vh;
+    height: 97vh;
+    background-color: antiquewhite;
 }
 
 .content {
@@ -42,4 +43,74 @@ canvas {
 #speedControl{
    width: 30vh;
    
+}
+ 
+
+
+@media (max-width: 1200px) {
+    canvas {
+        width: 70%;
+        left: 15%; 
+        right: 15%; 
+        height: 90vh;
+        top: 5vh; 
+    }
+    
+    .content {
+        top: 5vh; 
+        right: 1px; 
+    }
+    
+    #speedControl {
+        width: 14vh; 
+    }
+}
+
+@media (max-width: 840px) {
+    .content {
+        top: 5vh; 
+        right: 2vh; 
+    }
+    
+    #speedControl {
+        width: 10vh; 
+    }
+}
+
+@media (max-width: 768px) {
+    canvas {
+        width: 70%; 
+        left: 10%; 
+        right: 10%;
+        height: 85vh; 
+        top: 5vh; 
+    }
+    
+    .content {
+        top: 5vh; 
+        right: 2vh; 
+    }
+    
+    #speedControl {
+        width: 8vh; 
+    }
+}
+
+@media (max-width: 576px) {
+    canvas {
+        width: 65%; 
+        left: 5%; 
+        right: 5%;
+        height: 80vh; 
+        top: 5vh; 
+    }
+    
+    .content {
+        top: 5vh; 
+        right: 1vh; 
+    }
+    
+    #speedControl {
+        width: 9vh; 
+    }
 }
