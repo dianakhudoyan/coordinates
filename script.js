@@ -6,15 +6,15 @@
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 2;
   
-      ctx.beginPath();
-      ctx.moveTo(0, 250);
-      ctx.lineTo(500, 250);
-      ctx.stroke();
+    //   ctx.beginPath();
+    //   ctx.moveTo(0, 250);
+    //   ctx.lineTo(500, 250);
+    //   ctx.stroke();
   
-      ctx.beginPath();
-      ctx.moveTo(250, 0);
-      ctx.lineTo(250, 500);
-      ctx.stroke();
+    //   ctx.beginPath();
+    //   ctx.moveTo(250, 0);
+    //   ctx.lineTo(250, 500);
+    //   ctx.stroke();
   }
   
   let data = {
@@ -31,7 +31,7 @@
   let y = 1;
   let second = 1;
   
-  function upDate() {
+  function update() {
       if (data.centerX + data.radius > canvas.width || data.centerX < 0) {
           x *= -1;
       }
@@ -56,7 +56,7 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       requestAnimationFrame(loop);
       drawC();
-      upDate();
+      update();
       draw();
   }
   

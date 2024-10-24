@@ -17,7 +17,7 @@ body {
 canvas {
     border: .5rem solid black;
     position: absolute;
-    width: 99%;
+    width: 80%;
     top: 3px;
     left: 0px; 
     height: 99vh;
@@ -25,9 +25,9 @@ canvas {
 
 .content {
     position: absolute;
-    top: 4vw; 
-    left: 40vw;
-    transform: translateX(-50%);
+    top: 1vw; 
+    right: 3vh;
+    /* transform: translateX(-50%); */
     display: flex;
     gap: 10px;
 }
@@ -35,7 +35,9 @@ canvas {
 .box {
     display: flex;
     gap: 10px;
+    cursor: pointer;
 }
 #speedControl{
    width: 30vh;
+   
 }
