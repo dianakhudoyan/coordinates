@@ -60,18 +60,12 @@
       draw();
   }
   
-  minus.addEventListener('click', function () {
-      if (second > 1) {
-          second -= 1;
-          number.textContent = second;
-      }
-  });
+  let speedControl = document.getElementById('speedControl');
+  let speedValue = document.getElementById('speedValue');
   
-  plus.addEventListener('click', function () {
-      if (second < 10) {
-          second += 1;
-          number.textContent = second;
-      }
-  });
+    speedControl.addEventListener('input', function() {
+    second = Number(speedControl.value); 
+    speedValue.textContent = second; 
+});
   
   loop();

@@ -36,3 +36,6 @@ canvas {
     display: flex;
     gap: 10px;
 }
+#speedControl{
+   width: 30vh;
+}
