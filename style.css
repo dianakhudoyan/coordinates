@@ -39,12 +39,22 @@ canvas {
     display: flex;
     gap: 10px;
     cursor: pointer;
+    border: 1px solid;
 }
 #speedControl{
    width: 30vh;
-   
+   border: 1px solid;
 }
- 
+
+
+#speedControl::-webkit-slider-runnable-track {
+    background-color: antiquewhite; 
+}
+
+#speedControl::-webkit-slider-thumb {
+   color: black;
+   border: 1px solid;
+}
 
 
 @media (max-width: 1200px) {
