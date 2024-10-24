@@ -25,7 +25,7 @@ canvas {
 
 .content {
     position: absolute;
-    top: 5vw; 
+    top: 4vw; 
     left: 40vw;
     transform: translateX(-50%);
     display: flex;
