@@ -12,14 +12,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 canvas {
     border: .5rem solid black;
-    position: absolute;
-    width: 80%;
+    justify-content: center;
+    width: 50%;
     top: 3px;
-    left: 0px; 
+    left: 25%; 
+    right: 25%;
     height: 99vh;
 }
 
@@ -37,7 +39,7 @@ canvas {
     gap: 10px;
     cursor: pointer;
 }
-/* #speedControl{
+#speedControl{
    width: 30vh;
    
-} */
+}
