@@ -17,7 +17,7 @@
     //   ctx.stroke();
   }
   
-  let data = {
+  let circle = {
       centerX: 150,
       centerY: 100,
       radius: 10,
@@ -32,24 +32,30 @@
   let second = 1;
   
   function update() {
-      if (data.centerX + data.radius > canvas.width || data.centerX < 0) {
+      if (circle.centerX + circle.radius > canvas.width || circle.centerX < 0) {
           x *= -1;
       }
-      if (data.centerY + data.radius > canvas.height || data.centerY - data.radius < 0) {
+      if (circle.centerY + circle.radius > canvas.height || circle.centerY - circle.radius < 0) {
           y *= -1;
       }
-      data.centerX += x * second;
-      data.centerY += y * second;
+      circle.centerX += x * second;
+      circle.centerY += y * second;
   }
   
   function draw() {
       ctx.beginPath();
-      ctx.arc(data.centerX, data.centerY, data.radius, 0, Math.PI * 2);
+      ctx.arc(circle.centerX, circle.centerY, circle.radius, 0, Math.PI * 2);
       ctx.fillStyle = 'black';
       ctx.fill();
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 1;
       ctx.stroke();
+
+      ctx.fillStyle = "black";
+      ctx.fillRect(50, 50, 50, 50);
+      ctx.fillRect(50, 150, 50, 50); 
+      ctx.fillRect(300, 300, 50, 50); 
+      ctx.fillRect(200, 300, 50, 50); 
   }
   
   function loop() {
