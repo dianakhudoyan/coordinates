@@ -27,10 +27,10 @@ let y = 1;
 let second = 1;
 
 let squares = [
-    { x: 50, y: 50, size: 50 },
-    { x: 50, y: 150, size: 50 },
-    { x: 300, y: 300, size: 50 },
-    { x: 200, y: 300, size: 50 }
+    { x: 50, y: 50, size: 50,corner:0},
+    { x: 50, y: 150, size: 50,corner:0 },
+    { x: 300, y: 300, size: 50,corner:0 },
+    { x: 200, y: 300, size: 50,corner:0}
 ];
 
 function checkCollision(circle, square) {
@@ -44,6 +44,8 @@ function checkCollision(circle, square) {
 
 function update() {
     for (let square of squares) {
+        square.corner+=1
+        if(square.corner>=360) square.corner=0
         if (checkCollision(circle, square)) {
             if (Math.abs(circle.centerX - (square.x + square.size / 2)) < Math.abs(circle.centerY - (square.y + square.size / 2))) {
                 y *= -1; 
@@ -74,7 +76,12 @@ function draw() {
     ctx.stroke();
 
     for (let square of squares) {
-        ctx.fillRect(square.x, square.y, square.size, square.size);
+        ctx.save(); 
+        ctx.translate(square.x + square.size / 2, square.y + square.size / 2); 
+        ctx.rotate(square.corner * Math.PI / 180); 
+        ctx.fillRect(-square.size / 2, -square.size / 2, square.size, square.size);
+        ctx.restore(); 
+        
     }
 }
 
