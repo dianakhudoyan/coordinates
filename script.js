@@ -26,32 +26,45 @@ let x = 1;
 let y = 1;
 let second = 1;
 
-let squares = [
-    { x: 50, y: 50, size: 50, speed: 1 },
-    { x: 50, y: 150, size: 50,speed: 1 },
-    { x: 300, y: 300, size: 50,speed: 1 },
-    { x: 200, y: 300, size: 50,speed: 1 }
-];
+let squares = [];
+let numberOfSquares = 4;
+
+function createSquare(){
+    let sizes=50;
+    let x = Math.random() * (canvas.width - sizes);
+    let y =0
+    let speed=1
+    squares.push({ x: x, y: y, size: sizes, speed:speed })
+
+}
+
+
 
 function checkCollision(circle, square) {
     let squareCenterX = square.x + square.size / 2;
     let squareCenterY = square.y + square.size / 2;
     let distanceX = Math.abs(circle.centerX - squareCenterX);
     let distanceY = Math.abs(circle.centerY - squareCenterY);
-
+    
     return (distanceX < (square.size / 2 + circle.radius)) && (distanceY < (square.size / 2 + circle.radius));
 }
 
 function update() {
+    
     for (let square of squares) {
-        for (let square of squares) {
-            square.y += square.speed * second;}
+        square.y += square.speed * second;
         if (checkCollision(circle, square)) {
             if (Math.abs(circle.centerX - (square.x + square.size / 2)) < Math.abs(circle.centerY - (square.y + square.size / 2))) {
                 y *= -1; 
             } else {
                 x *= -1; 
             }
+        }
+    }
+    for (let i = squares.length - 1; i >= 0; i--) {
+        if (squares[i].y > canvas.height) {
+            squares.splice(i, 1);
+            createSquare();
         }
     }
 
@@ -64,6 +77,7 @@ function update() {
     circle.centerX += x * second;
     circle.centerY += y * second;
 }
+createSquare();
 
 function draw() {
 
@@ -86,6 +100,7 @@ function loop() {
     drawC();
     update();
     draw();
+    
 }
 
 let speedControl = document.getElementById('speedControl');
