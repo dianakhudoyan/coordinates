@@ -28,17 +28,17 @@ let second = 1;
 
 let squares = [];
 let numberOfSquares = 4;
+let distance=50;
+let squareSize = 50; 
+let speed = 3;
 
 function createSquare(){
-    let sizes=50;
-    let x = Math.random() * (canvas.width - sizes);
-    let y =0
-    let speed=1
-    squares.push({ x: x, y: y, size: sizes, speed:speed })
-
+    for (let i = 0; i < numberOfSquares; i++) {
+        let x = (canvas.width / numberOfSquares) * i + distance; 
+        let y = -i * (squareSize + distance);
+        squares.push({ x: x, y: y, size: squareSize, speed: speed });
+    }
 }
-
-
 
 function checkCollision(circle, square) {
     let squareCenterX = square.x + square.size / 2;
@@ -63,11 +63,12 @@ function update() {
     }
     for (let i = squares.length - 1; i >= 0; i--) {
         if (squares[i].y > canvas.height) {
-            squares.splice(i, 1);
-            createSquare();
+            squares[i].y = -squares[i].size * Math.random(); 
+            squares[i].x = (canvas.width / numberOfSquares) * i + (distance * Math.random()); 
         }
     }
 
+    
     if (circle.centerX + circle.radius > canvas.width || circle.centerX < 0) {
         x *= -1;
     }
@@ -77,7 +78,7 @@ function update() {
     circle.centerX += x * second;
     circle.centerY += y * second;
 }
-createSquare();
+createSquare()
 
 function draw() {
 
@@ -91,8 +92,10 @@ function draw() {
 
     for (let square of squares) {
         ctx.fillRect(square.x, square.y, square.size, square.size);
+        
     }
 }
+
 
 function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,6 +103,7 @@ function loop() {
     drawC();
     update();
     draw();
+    
     
 }
 
