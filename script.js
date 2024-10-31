@@ -17,8 +17,8 @@ function drawC() {
 }
 
 let circle = {
-    centerX: 150,
-    centerY: 100,
+    centerX: 150 * Math.random(),
+    centerY: 100 * Math.random(),
     radius: 10,
 };
 
@@ -41,14 +41,46 @@ function createSquare(){
 }
 
 function checkCollision(circle, square) {
-    let squareCenterX = square.x + square.size / 2;
-    let squareCenterY = square.y + square.size / 2;
-    let distanceX = Math.abs(circle.centerX - squareCenterX);
-    let distanceY = Math.abs(circle.centerY - squareCenterY);
-    
-    return (distanceX < (square.size / 2 + circle.radius)) && (distanceY < (square.size / 2 + circle.radius));
-}
+    let circleLeft = circle.centerX - circle.radius;
+    let circleRight = circle.centerX + circle.radius;
+    let circleTop = circle.centerY - circle.radius;
+    let circleBottom = circle.centerY + circle.radius;
 
+    let squareLeft = square.x;
+    let squareRight = square.x + square.size;
+    let squareTop = square.y;
+    let squareBottom = square.y + square.size;
+
+    if (
+        circleRight > squareLeft &&
+        circleLeft < squareRight &&
+        circleBottom > squareTop &&
+        circleTop < squareBottom
+    ) {
+  
+        let overlapX = Math.min(circleRight - squareLeft, squareRight - circleLeft);
+        let overlapY = Math.min(circleBottom - squareTop, squareBottom - circleTop);
+
+      
+        if (overlapX < overlapY) {
+            if (circleLeft < squareLeft) {
+                circle.centerX = squareLeft - circle.radius; 
+            } else {
+                circle.centerX = squareRight + circle.radius; 
+            }
+            x *= -1; 
+        } else {
+            if (circleTop < squareTop) {
+                circle.centerY = squareTop - circle.radius; 
+            } else {
+                circle.centerY = squareBottom + circle.radius; 
+            }
+            y *= -1; 
+        }
+        return true;
+    }
+    return false;
+}
 function update() {
     
     for (let square of squares) {
