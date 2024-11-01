@@ -149,96 +149,107 @@
 
 // loop();
 
-    var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
 
-    let data = {
-      centerX: 150 * Math.random(),
-      centerY: 100 * Math.random(),
-      radius: 10
-    };
+let data = {
+  centerX: 150 * Math.random(),
+  centerY: 100 * Math.random(),
+  radius: 10
+};
 
-    let x = 10;
-    let y = 10;
+let x = 10;
+let y = 10;
+let speed = 1; 
 
-    let squares = [];
-    function checkCollision(circle, square) {
-    let circleLeft = circle.centerX - circle.radius;
-    let circleRight = circle.centerX + circle.radius;
-    let circleTop = circle.centerY - circle.radius;
-    let circleBottom = circle.centerY + circle.radius;
+let squares = [
+  { x: 150, y: 150, size: 100 } 
+];
 
-    let squareLeft = square.x;
-    let squareRight = square.x + square.size;
-    let squareTop = square.y;
-    let squareBottom = square.y + square.size;
+function checkCollision(circle, square) {
+  let circleLeft = circle.centerX - circle.radius;
+  let circleRight = circle.centerX + circle.radius;
+  let circleTop = circle.centerY - circle.radius;
+  let circleBottom = circle.centerY + circle.radius;
 
-    if (
-        circleRight > squareLeft &&
-        circleLeft < squareRight &&
-        circleBottom > squareTop &&
-        circleTop < squareBottom
-    ) {
-  
-        let overlapX = Math.min(circleRight - squareLeft, squareRight - circleLeft);
-        let overlapY = Math.min(circleBottom - squareTop, squareBottom - circleTop);
+  let squareLeft = square.x;
+  let squareRight = square.x + square.size;
+  let squareTop = square.y;
+  let squareBottom = square.y + square.size;
 
-      
-        if (overlapX < overlapY) {
-            if (circleLeft < squareLeft) {
-                circle.centerX = squareLeft - circle.radius; 
-            } else {
-                circle.centerX = squareRight + circle.radius; 
-            }
-            x *= -1; 
-        } else {
-            if (circleTop < squareTop) {
-                circle.centerY = squareTop - circle.radius; 
-            } else {
-                circle.centerY = squareBottom + circle.radius; 
-            }
-            y *= -1; 
-        }
-        return true;
+  if (
+    circleRight > squareLeft &&
+    circleLeft < squareRight &&
+    circleBottom > squareTop &&
+    circleTop < squareBottom
+  ) {
+    let overlapX = Math.min(circleRight - squareLeft, squareRight - circleLeft);
+    let overlapY = Math.min(circleBottom - squareTop, squareBottom - circleTop);
+
+    if (overlapX < overlapY) {
+      if (circleLeft < squareLeft) {
+        circle.centerX = squareLeft - circle.radius;
+      } else {
+        circle.centerX = squareRight + circle.radius;
+      }
+      x *= -1; 
+    } else {
+      if (circleTop < squareTop) {
+        circle.centerY = squareTop - circle.radius;
+      } else {
+        circle.centerY = squareBottom + circle.radius;
+      }
+      y *= -1;
     }
-    return false;
+    return true;
+  }
+  return false;
 }
-    function upDate() {
-      if (data.centerX + data.radius > canvas.width || data.centerX - data.radius < 0) {
-        x *= -1; 
-      }
 
-      if (data.centerY + data.radius > canvas.height || data.centerY - data.radius < 0) {
-        y *= -1; 
-      }
+function update() {
+  if (data.centerX + data.radius > canvas.width || data.centerX - data.radius < 0) {
+    x *= -1;
+  }
 
-     
-      data.centerX += x;
-      data.centerY += y;
-    }
+  if (data.centerY + data.radius > canvas.height || data.centerY - data.radius < 0) {
+    y *= -1;
+  }
 
-  
-    function draw() {
-      ctx.beginPath();
-      ctx.arc(data.centerX, data.centerY, data.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'black';
-      ctx.fill();
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+  data.centerX += x * speed; 
+  data.centerY += y * speed;
 
+  squares.forEach(square => checkCollision(data, square));
+}
 
+function draw() {
+ 
+  ctx.beginPath();
+  ctx.arc(data.centerX, data.centerY, data.radius, 0, Math.PI * 2);
+  ctx.fillStyle = 'black';
+  ctx.fill();
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 1;
+  ctx.stroke();
 
-      ctx.fillRect(150, 150, 100, 100);
+ 
+  squares.forEach(square => {
+    ctx.fillRect(square.x, square.y, square.size, square.size);
+  });
+}
 
-    }
+function loop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
 
-    function loop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);  
-      upDate(); 
-      draw(); 
-      requestAnimationFrame(loop);
-    }
+let speedControl = document.getElementById('speedControl');
+let speedValue = document.getElementById('speedValue');
 
+speedControl.addEventListener('input', function() {
+  speed = Number(speedControl.value); 
+  speedValue.textContent = speed;
+});
 
-    loop();
+loop();
