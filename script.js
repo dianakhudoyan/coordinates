@@ -153,13 +153,13 @@ var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
 let data = {
-  centerX: 150 * Math.random(),
-  centerY: 100 * Math.random(),
+  centerX: 150,
+  centerY: 100 ,
   radius: 10
 };
 
-let x = 10;
-let y = 10;
+let x = 1;
+let y = 1;
 let speed = 1; 
 
 let squares = [
