@@ -163,7 +163,7 @@ let y = 10;
 let speed = 1; 
 
 let squares = [
-  { x: 150, y: 150, size: 100 } 
+  { x: 50, y: 50, size: 300 } 
 ];
 
 function checkCollision(circle, square) {
