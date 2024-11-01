@@ -160,7 +160,7 @@ let data = {
 
 let x = 1;
 let y = 1;
-let speed = 1; 
+let speed = 1 ; 
 
 let squares = [
   { x: 50, y: 50, size: 300 } 
@@ -206,19 +206,34 @@ function checkCollision(circle, square) {
   return false;
 }
 
+
+let squarePadding = 30; 
+squares[0].x = squarePadding; 
+squares[0].y = squarePadding;
+
+let squareDirectionX = 1; 
+let squareDirectionY = 1; 
+
 function update() {
-  if (data.centerX + data.radius > canvas.width || data.centerX - data.radius < 0) {
-    x *= -1;
-  }
+    if (data.centerX + data.radius > canvas.width || data.centerX - data.radius < 0) {
+        x *= -1;
+    }
+    if (data.centerY + data.radius > canvas.height || data.centerY - data.radius < 0) {
+        y *= -1;
+    }
+    data.centerX += x * speed;
+    data.centerY += y * speed;
 
-  if (data.centerY + data.radius > canvas.height || data.centerY - data.radius < 0) {
-    y *= -1;
-  }
+    squares[0].x += 2 * squareDirectionX;
+    if (squares[0].x + squares[0].size + squarePadding > canvas.width || squares[0].x < squarePadding) {
+        squareDirectionX *= -1; 
+    }
 
-  data.centerX += x * speed; 
-  data.centerY += y * speed;
-
-  squares.forEach(square => checkCollision(data, square));
+    squares[0].y += 2 * squareDirectionY;
+    if (squares[0].y + squares[0].size + squarePadding > canvas.height || squares[0].y < squarePadding) {
+        squareDirectionY *= -1; 
+    }
+    squares.forEach(square => checkCollision(data, square));
 }
 
 function draw() {
