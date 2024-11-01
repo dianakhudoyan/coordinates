@@ -30,7 +30,6 @@ canvas {
     position: absolute;
     top: 1vw; 
     right: 3vh;
-    /* transform: translateX(-50%); */
     display: flex;
     gap: 10px;
 }
