@@ -248,7 +248,7 @@ function update() {
             break;
     }
 
-    ժ
+
     squares.forEach(square => checkCollision(data, square));
 }
 
