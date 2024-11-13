@@ -265,6 +265,140 @@
 
 // loop();
 
+// var canvas = document.getElementById('myCanvas');
+// var ctx = canvas.getContext('2d');
+
+// let circle = {
+//     centerX: Math.random() * (canvas.width - 20) + 10,
+//     centerY: Math.random() * (canvas.height - 20) + 10,
+//     radius: 10,
+// };
+
+// let x = 1;
+// let y = 1;
+// let second = 1;
+
+// let squares = [];
+// let numberOfSquares = 4;
+// let distance = 50;
+// let squareSize = 50;
+// let speed = 2;
+
+// function createSquare() {
+//     for (let i = 0; i < numberOfSquares; i++) {
+//         let x = (canvas.width / numberOfSquares) * i + distance;
+//         let y = -i * (squareSize + distance);
+//         squares.push({ x: x, y: y, size: squareSize, speed: speed });
+//     }
+// }
+
+// function checkCollision(circle, square) {
+//     let testX = circle.centerX;
+//     let testY = circle.centerY;
+
+//     if (circle.centerX < square.x) {
+//         testX = square.x;
+//     } else if (circle.centerX > square.x + square.size) {
+//         testX = square.x + square.size;
+//     }
+
+//     if (circle.centerY < square.y) {
+//         testY = square.y;
+//     } else if (circle.centerY > square.y + square.size) {
+//         testY = square.y + square.size;
+//     }
+
+//     let distX = circle.centerX - testX;
+//     let distY = circle.centerY - testY;
+//     let distance = Math.sqrt(distX * distX + distY * distY);
+
+//     return distance <= circle.radius;
+// }
+
+// function update() {
+//     for (let square of squares) {
+//         square.y += square.speed * second;
+
+//         if (checkCollision(circle, square)) {
+//             if (Math.abs(circle.centerX - (square.x + square.size / 2)) > Math.abs(circle.centerY - (square.y + square.size / 2))) {
+//                 x *= -1;
+//             } else {
+//                 y *= -1;
+//             }    
+//             if (circle.centerY > square.y + square.size) {
+//                 circle.centerY = square.y + square.size + circle.radius; 
+//             } else if (circle.centerY < square.y) {
+//                 circle.centerY = square.y - circle.radius; 
+//             }
+
+//             if (circle.centerX > square.x + square.size) {
+//                 circle.centerX = square.x + square.size + circle.radius;
+//             } else if (circle.centerX < square.x) {
+//                 circle.centerX = square.x - circle.radius;
+//             }
+//         }
+//     }
+
+//     for (let i = squares.length - 1; i >= 0; i--) {
+//         if (squares[i].y > canvas.height) {
+//             squares[i].y = -squares[i].size;
+//             squares[i].x = (canvas.width / numberOfSquares) * i + (distance * Math.random());
+//         }
+//     }
+
+//     if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
+//         x *= -1;
+//     }
+//     if (circle.centerY + circle.radius > canvas.height || circle.centerY - circle.radius < 0) {
+//         y *= -1;
+//     }
+
+//     circle.centerX += x * second;
+//     circle.centerY += y * second;
+// }
+
+// createSquare();
+
+// function draw() {
+//     ctx.beginPath();
+//     ctx.arc(circle.centerX, circle.centerY, circle.radius, 0, Math.PI * 2);
+//     ctx.fillStyle = 'black';
+//     ctx.fill();
+//     ctx.strokeStyle = 'black';
+//     ctx.lineWidth = 1;
+//     ctx.stroke();
+
+//     for (let square of squares) {
+//         ctx.fillRect(square.x, square.y, square.size, square.size);
+//     }
+// }
+
+// function loop() {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     update();
+//     draw();
+//     requestAnimationFrame(loop);
+// }
+
+// let speedControl = document.getElementById('speedControl');
+// let speedValue = document.getElementById('speedValue');
+
+// speedControl.addEventListener('input', function() {
+//     second = Number(speedControl.value);
+//     speedValue.textContent = second;
+// });
+
+// loop();
+
+
+
+
+
+
+
+
+
+
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
@@ -274,92 +408,38 @@ let circle = {
     radius: 10,
 };
 
+let rect = {
+    x: 1,
+    y: 390,
+    width: 80,
+    height: 9
+};
+
 let x = 1;
 let y = 1;
 let second = 1;
 
-let squares = [];
-let numberOfSquares = 4;
-let distance = 50;
-let squareSize = 50;
-let speed = 2;
-
-function createSquare() {
-    for (let i = 0; i < numberOfSquares; i++) {
-        let x = (canvas.width / numberOfSquares) * i + distance;
-        let y = -i * (squareSize + distance);
-        squares.push({ x: x, y: y, size: squareSize, speed: speed });
-    }
-}
-
-function checkCollision(circle, square) {
-    let testX = circle.centerX;
-    let testY = circle.centerY;
-
-    if (circle.centerX < square.x) {
-        testX = square.x;
-    } else if (circle.centerX > square.x + square.size) {
-        testX = square.x + square.size;
-    }
-
-    if (circle.centerY < square.y) {
-        testY = square.y;
-    } else if (circle.centerY > square.y + square.size) {
-        testY = square.y + square.size;
-    }
-
-    let distX = circle.centerX - testX;
-    let distY = circle.centerY - testY;
-    let distance = Math.sqrt(distX * distX + distY * distY);
-
-    return distance <= circle.radius;
-}
-
 function update() {
-    for (let square of squares) {
-        square.y += square.speed * second;
-
-        if (checkCollision(circle, square)) {
-            if (Math.abs(circle.centerX - (square.x + square.size / 2)) > Math.abs(circle.centerY - (square.y + square.size / 2))) {
-                x *= -1;
-            } else {
-                y *= -1;
-            }    
-            if (circle.centerY > square.y + square.size) {
-                circle.centerY = square.y + square.size + circle.radius; 
-            } else if (circle.centerY < square.y) {
-                circle.centerY = square.y - circle.radius; 
-            }
-
-            if (circle.centerX > square.x + square.size) {
-                circle.centerX = square.x + square.size + circle.radius;
-            } else if (circle.centerX < square.x) {
-                circle.centerX = square.x - circle.radius;
-            }
-        }
+    if (circle.centerX + circle.radius > rect.x &&
+        circle.centerX - circle.radius < rect.x + rect.width &&
+        circle.centerY + circle.radius > rect.y &&
+        circle.centerY - circle.radius < rect.y + rect.height) {
+        
+        y *= -1;
     }
-
-    for (let i = squares.length - 1; i >= 0; i--) {
-        if (squares[i].y > canvas.height) {
-            squares[i].y = -squares[i].size;
-            squares[i].x = (canvas.width / numberOfSquares) * i + (distance * Math.random());
-        }
-    }
-
     if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
         x *= -1;
     }
     if (circle.centerY + circle.radius > canvas.height || circle.centerY - circle.radius < 0) {
         y *= -1;
     }
-
     circle.centerX += x * second;
     circle.centerY += y * second;
+
 }
 
-createSquare();
-
 function draw() {
+  
     ctx.beginPath();
     ctx.arc(circle.centerX, circle.centerY, circle.radius, 0, Math.PI * 2);
     ctx.fillStyle = 'black';
@@ -368,9 +448,9 @@ function draw() {
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    for (let square of squares) {
-        ctx.fillRect(square.x, square.y, square.size, square.size);
-    }
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 function loop() {
@@ -380,6 +460,16 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
+canvas.addEventListener('mousemove', function(e) {
+    let mouseX = e.clientX - canvas.getBoundingClientRect().left;
+    if (mouseX - rect.width / 2 < 0) {
+        rect.x = 1;
+    } else if (mouseX + rect.width / 2 > canvas.width) {
+        rect.x = canvas.width - rect.width-1; 
+    } else {
+        rect.x = mouseX - rect.width / 2; 
+    }
+});
 let speedControl = document.getElementById('speedControl');
 let speedValue = document.getElementById('speedValue');
 
