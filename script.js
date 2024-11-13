@@ -418,20 +418,26 @@ let rect = {
 let x = 1;
 let y = 1;
 let second = 1;
+let prevMouseX = null; 
+let rectSpeed = 1;
+let isCircleInCanvas = true;
 
 function update() {
+    if (!isCircleInCanvas) return;
     if (circle.centerX + circle.radius > rect.x &&
         circle.centerX - circle.radius < rect.x + rect.width &&
         circle.centerY + circle.radius > rect.y &&
-        circle.centerY - circle.radius < rect.y + rect.height) {
-        
+        circle.centerY - circle.radius < rect.y + rect.height){
         y *= -1;
     }
-    if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
+
+    else if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
         x *= -1;
-    }
-    if (circle.centerY + circle.radius > canvas.height || circle.centerY - circle.radius < 0) {
+    } else if (circle.centerY - circle.radius < 0) {
         y *= -1;
+    } 
+    else if (circle.centerY + circle.radius > canvas.height) {
+        isCircleInCanvas = false; 
     }
     circle.centerX += x * second;
     circle.centerY += y * second;
@@ -439,7 +445,7 @@ function update() {
 }
 
 function draw() {
-  
+    if (isCircleInCanvas) {
     ctx.beginPath();
     ctx.arc(circle.centerX, circle.centerY, circle.radius, 0, Math.PI * 2);
     ctx.fillStyle = 'black';
@@ -447,7 +453,7 @@ function draw() {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
     ctx.stroke();
-
+    }
 
     ctx.fillStyle = 'black';
     ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -462,6 +468,11 @@ function loop() {
 
 canvas.addEventListener('mousemove', function(e) {
     let mouseX = e.clientX - canvas.getBoundingClientRect().left;
+    if (prevMouseX !== null) {
+        rectSpeed = mouseX - prevMouseX;
+    }
+    prevMouseX = mouseX;
+
     if (mouseX - rect.width / 2 < 0) {
         rect.x = 1;
     } else if (mouseX + rect.width / 2 > canvas.width) {
