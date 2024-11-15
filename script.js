@@ -396,11 +396,13 @@
 
 
 
-
-
-
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
+
+function drawC() {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+}
 
 let circle = {
     centerX: Math.random() * (canvas.width - 20) + 10,
@@ -418,9 +420,15 @@ let rect = {
 let x = 1;
 let y = 1;
 let second = 1;
-let prevMouseX = null; 
-let rectSpeed = 1;
 let isCircleInCanvas = true;
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+        y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+    };
+}
 
 function update() {
     if (!isCircleInCanvas) return;
@@ -441,7 +449,6 @@ function update() {
     }
     circle.centerX += x * second;
     circle.centerY += y * second;
-
 }
 
 function draw() {
@@ -467,20 +474,16 @@ function loop() {
 }
 
 canvas.addEventListener('mousemove', function(e) {
-    let mouseX = e.clientX - canvas.getBoundingClientRect().left;
-    if (prevMouseX !== null) {
-        rectSpeed = mouseX - prevMouseX;
-    }
-    prevMouseX = mouseX;
-
-    if (mouseX - rect.width / 2 < 0) {
+    let mousePos = getMousePos(canvas, e); 
+    if (mousePos.x - rect.width / 2 < 0) {
         rect.x = 1;
-    } else if (mouseX + rect.width / 2 > canvas.width) {
-        rect.x = canvas.width - rect.width-1; 
+    } else if (mousePos.x + rect.width / 2 > canvas.width) {
+        rect.x = canvas.width - rect.width - 1; 
     } else {
-        rect.x = mouseX - rect.width / 2; 
+        rect.x = mousePos.x - rect.width / 2; 
     }
 });
+
 let speedControl = document.getElementById('speedControl');
 let speedValue = document.getElementById('speedValue');
 
