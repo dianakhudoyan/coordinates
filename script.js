@@ -405,8 +405,8 @@ function drawC() {
 }
 
 let circle = {
-    centerX: Math.random() * (canvas.width - 20) + 10,
-    centerY: Math.random() * (canvas.height - 20) + 10,
+    centerX: Math.random() * (canvas.width - 100) + 10,
+    centerY: Math.random() * (canvas.height - 100) + 10, 
     radius: 10,
 };
 
@@ -431,27 +431,46 @@ function getMousePos(canvas, evt) {
 }
 
 function update() {
-    if (!isCircleInCanvas) return;
+    if (!isCircleInCanvas) {
+        let continueGame = confirm(" Do you want to continue?");
+        if (continueGame) {
+            isCircleInCanvas = true;
+            circle.centerX = Math.random() * (canvas.width - 100) + 10; 
+            circle.centerY = Math.random() * (canvas.height - 100) + 10;
+            x = 1; 
+            y = 1; 
+            second = 1; 
+        } else {
+          
+            alert("Thanks for playing!"); 
+            return; 
+        }
+    }
+
+   
     if (circle.centerX + circle.radius > rect.x &&
         circle.centerX - circle.radius < rect.x + rect.width &&
         circle.centerY + circle.radius > rect.y &&
-        circle.centerY - circle.radius < rect.y + rect.height){
+        circle.centerY - circle.radius < rect.y + rect.height) {
         y *= -1;
     }
 
-    else if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
+    
+    if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
         x *= -1;
     } else if (circle.centerY - circle.radius < 0) {
         y *= -1;
-    } 
-    else if (circle.centerY + circle.radius > canvas.height) {
+    } else if (circle.centerY + circle.radius > canvas.height) {
         isCircleInCanvas = false; 
     }
+
+   
     circle.centerX += x * second;
     circle.centerY += y * second;
 }
 
 function draw() {
+
     if (isCircleInCanvas) {
     ctx.beginPath();
     ctx.arc(circle.centerX, circle.centerY, circle.radius, 0, Math.PI * 2);
@@ -461,9 +480,10 @@ function draw() {
     ctx.lineWidth = 1;
     ctx.stroke();
     }
-
+  
     ctx.fillStyle = 'black';
     ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+    
 }
 
 function loop() {
@@ -491,5 +511,9 @@ speedControl.addEventListener('input', function() {
     second = Number(speedControl.value);
     speedValue.textContent = second;
 });
-
+document.getElementById("button").addEventListener("click", function () {
+    draw();
+    this.disabled = true;
+    this.style.display = "none";
+  });
 loop();
