@@ -391,10 +391,6 @@
 // loop();
 
 
-
-
-
-
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
@@ -405,7 +401,7 @@ function drawC() {
 
 let circle = {
     centerX: Math.random() * (canvas.width - 100) + 10,
-    centerY: Math.random() * (canvas.height - 100) + 10, 
+    centerY: Math.random() * (canvas.height - 100) + 10,
     radius: 10,
 };
 
@@ -434,11 +430,43 @@ function getMousePos(canvas, evt) {
     };
 }
 
+function createNonOverlappingSquare() {
+    let maxAttempts = 120;
+    let minY = 10;
+    let maxY = canvas.height - (squareSize) * 2.5;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        let newX = Math.random() * (canvas.width - squareSize);
+        let newY = Math.random() * (maxY - minY) + minY;
+
+        let overlaps = false;
+
+        for (let square of squares) {
+            if (
+                newX < square.x + square.size &&
+                newX + squareSize > square.x &&
+                newY < square.y + square.size &&
+                newY + squareSize > square.y
+            ) {
+                overlaps = true;
+                break;
+            }
+        }
+
+        if (!overlaps) {
+            return { x: newX, y: newY, size: squareSize, speed: speed };
+        }
+    }
+
+    return null;
+}
+
 function createSquare() {
     for (let i = 0; i < numberOfSquares; i++) {
-        let x = Math.random() * (canvas.width - squareSize); 
-        let y = Math.random() * (canvas.height - squareSize); 
-        squares.push({ x: x, y: y, size: squareSize, speed: speed });
+        let newSquare = createNonOverlappingSquare();
+        if (newSquare) {
+            squares.push(newSquare);
+        }
     }
 }
 
@@ -466,15 +494,10 @@ function checkCollision(circle, square) {
 }
 
 function update() {
-    for (let i = squares.length - 1; i >= 0; i--) { 
+    for (let i = squares.length - 1; i >= 0; i--) {
         let square = squares[i];
-        
+
         if (checkCollision(circle, square)) {
-            squares.splice(i, 1); 
-            let x = Math.random() * (canvas.width - squareSize); 
-            let y = Math.random() * (canvas.height - squareSize);
-            squares.push({ x: x, y: y, size: squareSize, speed: speed });
-            
             if (Math.abs(circle.centerX - (square.x + square.size / 2)) > Math.abs(circle.centerY - (square.y + square.size / 2))) {
                 x *= -1;
             } else {
@@ -492,10 +515,14 @@ function update() {
             } else if (circle.centerX < square.x) {
                 circle.centerX = square.x - circle.radius;
             }
+            squares.splice(i, 1);
+            let newSquare = createNonOverlappingSquare();
+            if (newSquare) {
+                squares.push(newSquare);
+            }
         }
     }
 
-    
     for (let i = squares.length - 1; i >= 0; i--) {
         if (squares[i].y > canvas.height) {
             squares[i].y = -squares[i].size;
@@ -504,17 +531,17 @@ function update() {
     }
 
     if (!isCircleInCanvas) {
-        let continueGame = confirm(" Do you want to continue?");
+        let continueGame = confirm("Do you want to continue?");
         if (continueGame) {
             isCircleInCanvas = true;
-            circle.centerX = Math.random() * (canvas.width - 100) + 10; 
+            circle.centerX = Math.random() * (canvas.width - 100) + 10;
             circle.centerY = Math.random() * (canvas.height - 100) + 10;
-            x = 1; 
-            y = 1; 
-            second = 1; 
+            x = 1;
+            y = 1;
+            second = 1;
         } else {
-            alert("Thanks for playing!"); 
-            return; 
+            alert("Thanks for playing!");
+            return;
         }
     }
 
@@ -522,7 +549,13 @@ function update() {
         circle.centerX - circle.radius < rect.x + rect.width &&
         circle.centerY + circle.radius > rect.y &&
         circle.centerY - circle.radius < rect.y + rect.height) {
-        y *= -1;
+
+        if (circle.centerY < rect.y || circle.centerY > rect.y + rect.height) {
+            y *= -1;
+        }
+        if (circle.centerX < rect.x || circle.centerX > rect.x + rect.width) {
+            x *= -1;
+        }
     }
 
     if (circle.centerX + circle.radius > canvas.width || circle.centerX - circle.radius < 0) {
@@ -530,12 +563,13 @@ function update() {
     } else if (circle.centerY - circle.radius < 0) {
         y *= -1;
     } else if (circle.centerY + circle.radius > canvas.height) {
-        isCircleInCanvas = false; 
+        isCircleInCanvas = false;
     }
 
     circle.centerX += x * second;
     circle.centerY += y * second;
 }
+
 createSquare();
 
 function draw() {
@@ -565,13 +599,13 @@ function loop() {
 }
 
 canvas.addEventListener('mousemove', function(e) {
-    let mousePos = getMousePos(canvas, e); 
+    let mousePos = getMousePos(canvas, e);
     if (mousePos.x - rect.width / 2 < 0) {
         rect.x = 1;
     } else if (mousePos.x + rect.width / 2 > canvas.width) {
-        rect.x = canvas.width - rect.width - 1; 
+        rect.x = canvas.width - rect.width - 1;
     } else {
-        rect.x = mousePos.x - rect.width / 2; 
+        rect.x = mousePos.x - rect.width / 2;
     }
 });
 
@@ -582,9 +616,11 @@ speedControl.addEventListener('input', function() {
     second = Number(speedControl.value);
     speedValue.textContent = second;
 });
+
 document.getElementById("button").addEventListener("click", function () {
     draw();
     this.disabled = true;
     this.style.display = "none";
 });
+
 loop();
